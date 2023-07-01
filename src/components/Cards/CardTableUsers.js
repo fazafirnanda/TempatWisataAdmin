@@ -79,59 +79,6 @@ export default function CardTableUsers({ color }) {
                   Users
                 </h3>
               </div>
-              {/* <div className="mr-1">
-              <label
-                className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Data 1
-              </label>
-              <input
-                value={data1}
-                onChange={(e) => setData1(e.target.value)}
-                className="border-0 px-3 py-3 placeholder-blueGray-500 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                placeholder="Data 1"
-                required
-              />
-            </div>
-            <div className="mr-1">
-              <label
-                className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Data 2
-              </label>
-              <input
-                value={data2}
-                onChange={(e) => setData2(e.target.value)}
-                className="border-0 px-3 py-3 placeholder-blueGray-500 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                placeholder="Data 2"
-                required
-              />
-            </div>
-            <div className="mr-1">
-              <label
-                className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Data 3
-              </label>
-              <input
-                value={data3}
-                onChange={(e) => setData3(e.target.value)}
-                className="border-0 px-3 py-3 placeholder-blueGray-500 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                placeholder="Data 3"
-                required
-              />
-            </div> */}
-              {/* <div className="mr-1">
-              <button
-                className="bg-emerald-500 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none   w-full ease-linear transition-all duration-150"
-                type="Submit"
-              >
-                Tambah
-              </button>
-            </div> */}
             </form>
           </div>
           <div className="block w-full overflow-x-auto">
@@ -248,10 +195,6 @@ export default function CardTableUsers({ color }) {
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         {data.provinsi}
                       </td>
-
-                      {/* <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <TableDropdown id={data.id} />
-                      </td> */}
                     </tr>
                   );
                 })}

@@ -16,6 +16,7 @@ import Settings from "views/admin/Settings.js";
 import TableWisata from "views/admin/TableWisata.js";
 import TableUsers from "views/admin/TableUsers.js";
 import FormWisata from "components/Cards/FormWisata";
+import CardTableTransaksi from "components/Cards/CardTableTransaksi";
 
 export const ThemeContext = createContext({});
 
@@ -26,6 +27,11 @@ export default function Admin() {
     dataWisata: [],
     editWisata: false,
     idWisata: "",
+    dataTransaksi: [],
+    dataTransaksiPaket: [],
+    dataTransaksiWisata: [],
+    dataTransaksiTravel: [],
+    dataTransaksiHotel: [],
   });
   const login = localStorage.getItem("login");
   if (!login) {
@@ -54,6 +60,12 @@ export default function Admin() {
                 exact
                 component={TableWisata}
               />
+              <Route
+                path="/admin/transaksi"
+                exact
+                component={CardTableTransaksi}
+              />
+
               <Redirect from="/admin" to="/admin/dashboard" />
             </Switch>
             <FooterAdmin />

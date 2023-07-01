@@ -11,6 +11,10 @@ import { db } from "utils/firebase";
 import { ThemeContext } from "layouts/Admin";
 import { fetchDataWisata } from "helpers/FetchData.js";
 import TableDropdown from "components/Dropdowns/TableDropdown.js";
+import Swal from "sweetalert2";
+import { deleteDoc, doc } from "@firebase/firestore";
+import { ref } from "@firebase/storage";
+import { storage } from "utils/firebase";
 
 export default function CardTableWisata({ color }) {
   const { context, setContext } = useContext(ThemeContext);
@@ -19,20 +23,41 @@ export default function CardTableWisata({ color }) {
     fetchDataWisata().then((data) => {
       setContext({ ...context, dataWisata: data });
     });
-
-    // // Subscribe to realtime changes
-    // const unsubscribe = onSnapshot(collection(db, "wisata"), (snapshot) => {
-    //   // const arr =[]
-    //   // const data = snapshot.docs.map((doc) => arr.push({...doc,id:snapshot.docs.id}));
-    //   const data = querySnapshot.docs.map((doc) => doc.doc());
-    //   console.log(data);
-    //   // setContext({ ...context, dataWisata: arr });
-    // });
-
-    // // Unsubscribe to prevent memory leaks
-    // return () => unsubscribe();
   }, []);
-  console.log(context);
+
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+    try {
+      // const storageRef = ref(storage, temp.foto);
+      // const imageRef = storage.ref().child(temp.foto);
+
+      // imageRef
+      //   .delete()
+      //   .then(() => {
+      //     console.log("File berhasil dihapus");
+      //   })
+      //   .catch((error) => {
+      //     console.error("Terjadi kesalahan saat menghapus file:", error);
+      //   });
+
+      await deleteDoc(doc(db, "wisata", id));
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Data Berhasil Dihapus",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      window.location.reload(true);
+    } catch (error) {
+      console.error("Error removing document: ", error);
+    }
+  };
+
+  const handleEdit = async (e, id) => {
+    e.preventDefault();
+    setContext({ ...context, editWisata: true, idWisata: id });
+  };
 
   return (
     <>
@@ -58,51 +83,7 @@ export default function CardTableWisata({ color }) {
                   Wisata Indonesia
                 </h3>
               </div>
-              {/* <div className="mr-1">
-              <label
-                className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Data 1
-              </label>
-              <input
-                value={data1}
-                onChange={(e) => setData1(e.target.value)}
-                className="border-0 px-3 py-3 placeholder-blueGray-500 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                placeholder="Data 1"
-                required
-              />
-            </div>
-            <div className="mr-1">
-              <label
-                className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Data 2
-              </label>
-              <input
-                value={data2}
-                onChange={(e) => setData2(e.target.value)}
-                className="border-0 px-3 py-3 placeholder-blueGray-500 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                placeholder="Data 2"
-                required
-              />
-            </div>
-            <div className="mr-1">
-              <label
-                className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Data 3
-              </label>
-              <input
-                value={data3}
-                onChange={(e) => setData3(e.target.value)}
-                className="border-0 px-3 py-3 placeholder-blueGray-500 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                placeholder="Data 3"
-                required
-              />
-            </div> */}
+
               <div className="mr-1">
                 <button
                   className="bg-emerald-500 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none w-full ease-linear transition-all duration-150"
@@ -140,6 +121,26 @@ export default function CardTableWisata({ color }) {
                     }
                   >
                     Nama
+                  </th>
+                  <th
+                    className={
+                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                      (color === "light"
+                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                    }
+                  >
+                    Latitude
+                  </th>
+                  <th
+                    className={
+                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                      (color === "light"
+                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                    }
+                  >
+                    Longitude
                   </th>
                   <th
                     className={
@@ -212,13 +213,15 @@ export default function CardTableWisata({ color }) {
                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                     }
-                  ></th>
+                  >
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {context.dataWisata?.map((data, index) => {
                   let count = index + 1;
-                  console.log(data);
+                  // console.log(data);
                   return (
                     <tr key={count} className="">
                       <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
@@ -237,6 +240,12 @@ export default function CardTableWisata({ color }) {
                         {data.nama}
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        {data.latitude}
+                      </td>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        {data.longitude}
+                      </td>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         {data.lokasi}
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -253,17 +262,30 @@ export default function CardTableWisata({ color }) {
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         <img
-                          src={data.gambar}
+                          src={data.link}
                           className="w-16 h-16 object-center object-cover"
                         />
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         {data.kategori}
-                        {data.id}
                       </td>
 
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <TableDropdown id={data.id} />
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 whitespace-nowrap text-xs p-4">
+                        <div className="flex">
+                          <button
+                            onClick={(e) => handleDelete(e, data.id)}
+                            className="mr-3 text-red"
+                          >
+                            Delete
+                          </button>
+                          <button
+                            onClick={(e) => handleEdit(e, data.id)}
+                            className="text-green"
+                          >
+                            Edit
+                          </button>
+                        </div>
+                        {/* <TableDropdown id={data.id} /> */}
                       </td>
                     </tr>
                   );

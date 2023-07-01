@@ -1265,6 +1265,14 @@ select {
   background-color: rgba(71, 85, 105, var(--tw-bg-opacity));
 }
 
+.text-red {
+  color: #ac1d15;
+}
+
+.text-green {
+  color: #506f66;
+}
+
 .bg-center {
   background-position: center;
 }
