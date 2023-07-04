@@ -66,7 +66,7 @@ export default function Admin() {
                 component={CardTableTransaksi}
               />
 
-              <Redirect from="/admin" to="/admin/dashboard" />
+              {/* <Redirect from="/admin" to="/admin/dashboard" /> */}
             </Switch>
             <FooterAdmin />
           </div>

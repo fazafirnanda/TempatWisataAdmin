@@ -70,7 +70,7 @@ export default function FormWisata() {
 
   const handleSubmitAdd = async (e) => {
     e.preventDefault();
-    console.log(imageSelected);
+    // console.log(imageSelected);
     let angka = Math.floor(Math.random() * 10000);
     const storageRef = ref(storage, `${angka}${imageSelected.name}`);
     const uploadTask = uploadBytesResumable(storageRef, imageSelected);
@@ -93,6 +93,7 @@ export default function FormWisata() {
             input.ready == 0 ? (input.ready = false) : (input.ready = true);
             const newData = { ...input, foto: data.fullPath, link: datas };
             const docRef = await addDoc(collection(db, "wisata"), newData);
+            // console.log(docRef);
           });
         });
       }
@@ -123,7 +124,7 @@ export default function FormWisata() {
       addWisata: false,
       editWisata: false,
     });
-    window.location.reload(true);
+    // window.location.reload(true);
   };
 
   const handleSubmitEdit = async (e, collectionName, docId, newData) => {
